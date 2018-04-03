@@ -1,0 +1,26 @@
+{
+  "name": "auto-control-stock-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/livelikeabel/auto-control-stock-bot.git"
+  },
+  "author": "abel ko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/livelikeabel/auto-control-stock-bot/issues"
+  },
+  "homepage": "https://github.com/livelikeabel/auto-control-stock-bot#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mysql": "^2.15.0",
+    "node-telegram-bot-api": "^0.30.0",
+    "nodemon": "^1.17.3",
+    "sequelize": "^4.37.5"
+  }
+}
