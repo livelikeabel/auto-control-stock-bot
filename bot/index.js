@@ -6,9 +6,8 @@ const token = '581322990:AAFU_K4UsShGm6s_kb_O8YViO1bUirw58ug';
 
 const bot = new TelegramBot(token, {polling: true});
 
-const { getMenuDaily } = require('../cron/jobs/autoControlStock');
-const { menuDaily } = require('../database/schema/platingDatabase');
-const { Op } = require('sequelize');
+const { getMenuDaily, testGetMenuDailyDB } = require('../cron/jobs/autoControlStock');
+
 
 bot.onText(/\/echo (.+)/, (msg, match) => {
     // 'msg' is the received Message from Telegram
@@ -81,26 +80,8 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
     //     //저녁데일리메뉴의
     //   }
     // });
-
-
-    //////////////////////////////////////////////////////
-    
-    const dailyMenusOptions = {
-      where: {
-          service_type: {
-            [Op.or]: ['DINNER','LUNCH']
-          },
-      },
-    };
-    //주문관련 정보를 받아온다.
-    console.log(menuDaily);
-    console.log(typeof(menuDaily));
-
-    const dailyMenus = await menuDaily.findAll(dailyMenusOptions);
-    if(dailyMenus.length === 0){
-      console.log('없습니다.!');
-    }
-    await console.log(dailyMenus);
+      
+    testGetMenuDailyDB();
 
     console.log(process.env.MYSQL_USER);  
     bot.sendMessage(chatId, 'Received your message');

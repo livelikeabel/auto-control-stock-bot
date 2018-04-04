@@ -1,4 +1,6 @@
 const fetch = require('node-fetch');
+const { Op } = require('sequelize');
+const { menuDaily } = require('../../database/schema/platingDatabase');
 
 exports.getMenuDaily = async (serviceType, area, date) => {
     const response = await fetch(`https://apialpha.plating.co.kr/v2/menu/daily?serviceType=${serviceType}&area=${area}&date=${date}`, {
@@ -14,4 +16,21 @@ exports.getMenuDaily = async (serviceType, area, date) => {
     return menuDaily;
 };
 
-//module.exports.getMenuDaily = getMenuDaily;
+exports.testGetMenuDailyDB = async () => {
+    const dailyMenusOptions = {
+        where: {
+            service_type: {
+              [Op.or]: ['DINNER','LUNCH']
+            },
+        },
+      };
+      //주문관련 정보를 받아온다.
+      console.log(menuDaily);
+      console.log(typeof(menuDaily));
+    
+      const dailyMenus = await menuDaily.findAll(dailyMenusOptions);
+      if(dailyMenus.length === 0){
+        console.log('없습니다.!');
+      }
+      await console.log(dailyMenus);
+}
