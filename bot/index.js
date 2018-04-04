@@ -37,6 +37,26 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
             const menuDinnerName = menuDinner.menuInformation.name.short;
             if(menuLunchName === menuDinnerName) {
               console.log(`점심 ${menuLunchName}의 재고가 0 임으로, 저녁 ${menuDinnerName} 수량을 점심으로 옮깁니다. `);
+              //현재 scope의 menuDinner는 점심 재고 0인 메뉴와 같다
+              //console.log(menuDinner.stock); //stock이 99 이면 운영팀이 일부로 한것. 예외처리 떄 참고하자
+              // 저녁의 남은 개수를 줄이고, 점심을 올리는 function
+              console.log(menuDinner.remain); // 저녁 남은게 5개라고 하면,
+              if(menuDinner.remain === 0) return; //점심, 저녁 둘다 재고가 0 임으로 return
+              // 저녁의 수량이 1개 뿐이라면, 0개를 남기고, lunch수량을 1개 올린다.
+              if(menuDinner.remain === 1) {
+                const controlNumber = 1;
+                //점심 올리는 함수
+                //저녁 내리는 함수
+              }
+              else {
+                const controlNumber = menuDinner.remain - 1; //4개를 옮겨주어야 한다.
+                console.log(controlNumber);
+              // 점심 올리는 함수 // controlNumber 넘겨주기
+              
+
+              // 저녁 내리는 함수 
+              } 
+            
             }
         })
         
