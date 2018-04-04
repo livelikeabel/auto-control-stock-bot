@@ -12,7 +12,7 @@ module.exports = seq =>
                 field: 'idx',
               },
             serveDate: {
-                type: DataTypes.DATE,
+                type: DataTypes.STRING(45),
                 allowNull: true,
                 field: 'serve_date',
             },

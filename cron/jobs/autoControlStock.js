@@ -16,12 +16,14 @@ exports.getMenuDaily = async (serviceType, area, date) => {
     return menuDaily;
 };
 
+// pram 으로 당일 날짜를 넣어주어야 한다.
 exports.testGetMenuDailyDB = async () => {
     const dailyMenusOptions = {
         where: {
             service_type: {
               [Op.or]: ['DINNER','LUNCH']
             },
+            serve_date: '2018-04-03',
         },
       };
       //주문관련 정보를 받아온다.
