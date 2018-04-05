@@ -6,7 +6,7 @@ const token = '581322990:AAFU_K4UsShGm6s_kb_O8YViO1bUirw58ug';
 
 const bot = new TelegramBot(token, { polling: true });
 
-const { getMenuDaily, testGetMenuDailyDB, addStock } = require('../cron/jobs/autoControlStock');
+const { getMenuDaily, testGetMenuDailyDB, addStock, substractStock } = require('../cron/jobs/autoControlStock');
 
 
 bot.onText(/\/echo (.+)/, (msg, match) => {
@@ -43,6 +43,7 @@ bot.on('message', async (msg) => {
         const initialLunchStock = menuLunch.stock;
         const initialDinnerStock = menuDinner.stock;
 
+
         if (menuLunchName === menuDinnerName) {
           console.log(`점심 ${menuLunchName}의 재고(${menuLunchId})가 0 임으로, 저녁 ${menuDinnerName}(${menuDinnerId}) 수량을 점심으로 옮깁니다. `);
           // const dinnerRemainStock = menuDinner.remain;
@@ -60,7 +61,7 @@ bot.on('message', async (msg) => {
           //addStock(menuLunch.idx, lunchStock);
 
           if (menuDinner.remain === 0) {
-            console.log(`저녁 ${menuDinnerName}(${menuDinnerId}) 재고도 0 입니다 ㅠㅠ`);
+            console.log(` => 저녁 ${menuDinnerName}(${menuDinnerId}) 재고도 0 입니다 ㅠㅠ`);
             console.log('==================================================================');
             return;
           }; //점심, 저녁 둘다 재고가 0 임으로 return
@@ -69,19 +70,23 @@ bot.on('message', async (msg) => {
           // 저녁의 수량이 1개 뿐이라면, 0개를 남기고, lunch수량을 1개 올린다.
           if (menuDinner.remain === 1) {
             const controlNumber = 1;
-            console.log(`저녁(id : ${menuDinnerId})의 수량이 1개여서, 점심 1 올리고 저녁은 0으로 하겠습니당`);
-            console.log('==================================================================');
+            console.log(` => 저녁(id : ${menuDinnerId})의 수량이 1개여서, 점심 1 올리고 저녁은 0으로 하겠습니당`);
+          
             //점심 올리는 함수 
+            addStock(menuLunchId, initialLunchStock, controlNumber)
             //저녁 내리는 함수
+            substractStock(menuDinnerId, initialDinnerStock, controlNumber)
+            console.log('==================================================================');
           }
           else {
             const controlNumber = menuDinner.remain - 1; //4개를 옮겨주어야 한다.
             //console.log(controlNumber);
-            console.log(`점심은 ${menuLunchName}(${menuLunchId})는 ${controlNumber}만큼 올리고, 저녁 ${menuDinnerName}(${menuDinnerId})는 ${controlNumber}만큼 내립니다.`);
+            console.log(` => 점심의 ${menuLunchName}(${menuLunchId})는 ${controlNumber}만큼 올리고, 저녁 ${menuDinnerName}(${menuDinnerId})는 ${controlNumber}만큼 내립니다.`);
 
-            // 점심 올리는 함수 // controlNumber 넘겨주기
+            // 점심 올리는 함수 //
             addStock(menuLunchId, initialLunchStock, controlNumber)
             // 저녁 내리는 함수 
+            substractStock(menuDinnerId, initialDinnerStock, controlNumber)
             console.log('==================================================================');
           }
 
