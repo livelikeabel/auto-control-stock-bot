@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 const { menuDaily } = require('../../database/schema/platingDatabase');
 
 exports.getMenuDaily = async (serviceType, area, date) => {
-    const response = await fetch(`https://apialpha.plating.co.kr/v2/menu/daily?serviceType=${serviceType}&area=${area}&date=${date}`, {
+    const response = await fetch(`https://apidev.plating.co.kr/v2/menu/daily?serviceType=${serviceType}&area=${area}&date=${date}`, {
         method: 'GET',
         headers: {
             pt: 'MaS+ErT0KeN::P1a+iNgIsG00dF0oD#@!123!@#321#I@m_P1a+ing_D2V210pm2N++E@m_Y0wU',
@@ -23,7 +23,7 @@ exports.testGetMenuDailyDB = async () => {
             service_type: {
               [Op.or]: ['DINNER','LUNCH']
             },
-            serve_date: '2018-04-03',
+            serve_date: '2018-01-24',
         },
       };
       //주문관련 정보를 받아온다.
@@ -37,11 +37,11 @@ exports.testGetMenuDailyDB = async () => {
       await console.log(dailyMenus);
 }
 
-exports.addStock = (id) => {
+exports.addStock = (id, initialStock, additionalStock) => {
     console.log('method start');
-    console.log(id);
+    console.log(`메뉴 id : ${id} || 기존 재고 : ${initialStock} || 추가 개수 : ${additionalStock}`);
     menuDaily.update({
-        stock: 1,
+        stock: initialStock + additionalStock,
         },{
         where: {
              idx: id 
