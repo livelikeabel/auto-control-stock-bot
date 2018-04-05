@@ -6,7 +6,7 @@ const token = '581322990:AAFU_K4UsShGm6s_kb_O8YViO1bUirw58ug';
 
 const bot = new TelegramBot(token, {polling: true});
 
-const { getMenuDaily, testGetMenuDailyDB } = require('../cron/jobs/autoControlStock');
+const { getMenuDaily, testGetMenuDailyDB, addStock } = require('../cron/jobs/autoControlStock');
 
 
 bot.onText(/\/echo (.+)/, (msg, match) => {
@@ -33,7 +33,7 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
     menuDailyLunch.map((menuLunch) => {
       if(menuLunch.remain === 0) {
         const menuLunchName = menuLunch.menuInformation.name.short;
-        console.log(`${menuLunchName}메뉴가 매진 입니다.`)
+        console.log(`${menuLunchName}메뉴가 매진 입니다.(메뉴번호 : ${menuLunch.menuIdx})`)
 
         //menuDailyDinner에서 돌면서 menuDinner와 menuLunch가 겹치는 부분을 찾는다. 나중에 메소드 분리하기
         menuDailyDinner.find((menuDinner) => {
@@ -81,8 +81,8 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
     //   }
     // });
       
-    testGetMenuDailyDB();
-
+    //testGetMenuDailyDB();
+    addStock(82837);
     console.log(process.env.MYSQL_USER);  
     bot.sendMessage(chatId, 'Received your message');
   });

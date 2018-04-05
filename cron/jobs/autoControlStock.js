@@ -36,3 +36,20 @@ exports.testGetMenuDailyDB = async () => {
       }
       await console.log(dailyMenus);
 }
+
+exports.addStock = (id) => {
+    console.log('method start');
+    console.log(id);
+    menuDaily.update({
+        stock: 1,
+        },{
+        where: {
+             idx: id 
+        }
+    }).then((result) => {
+        console.log(result, 'success!')
+    }).catch((err)=>{
+        console.log(err);
+    });
+    console.log('done')
+}
