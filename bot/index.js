@@ -88,12 +88,10 @@ bot.on('message', async (msg) => {
 
       addStock(menuDinnerId, initialDinnerStock, controlNumber);
       substractStock(menuLunchId, initialLunchStock, controlNumber);
-      //sendmessage funciton 을 만들자.
-      const jinsuSays = `송파 Dinner에 ${menuDinnerName}가 매진이 되어 LUNCH에서 ${controlNumber}개 차감하고 DINNER에 ${controlNumber}개 추가 했습니다 \r`
-      bot.sendMessage(chatId, jinsuSays);
-      // console.log(jinsuSays)
+      sendStockMessage(menuDinner, menuLunch, controlNumber);
     }
   })
+  console.log('===================== DINNER CHECK FINISH =========================');
 
   function findSameMenu(menuName, menuDailyRawData) {
     return menuDailyRawData.filter(menu => menu.menuInformation.name.short === menuName)[0];
@@ -103,8 +101,15 @@ bot.on('message', async (msg) => {
     return menuDailyServiceType.filter(menu => menu.remain === 0);
   }
 
+  function sendStockMessage(soldOutMenu, unSoldMenu, controlNumber) {
+    const jinsuSays = `송파 ${soldOutMenu.serviceType}에 ${soldOutMenu.menuInformation.name.short}가 매진이 되어 ${unSoldMenu.serviceType}에서 ${controlNumber}개 차감하고 ${soldOutMenu.serviceType}에 ${controlNumber}개 추가 했습니다 \r`
+    bot.sendMessage(chatId, jinsuSays);
+  }
+
   bot.sendMessage(chatId, 'Received your message');
 });
+
+
 
 //"역삼 Lunch에 치킨벤또가 매진이 되어 Dinner에서 2개를 차감하고 Lunch에 2개를 추가했습니다")
 
