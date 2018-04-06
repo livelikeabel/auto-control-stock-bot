@@ -38,8 +38,8 @@ exports.testGetMenuDailyDB = async () => {
 }
 
 exports.addStock = (id, initialStock, stockToBeAdded) => {
-    console.log('addStock method start');
-    console.log(`메뉴 id : ${id} || 초기Stock : ${initialStock} || 추가 개수 : ${stockToBeAdded}`);
+    //console.log('addStock method start');
+    //console.log(`메뉴 id : ${id} || 초기Stock : ${initialStock} || 추가 개수 : ${stockToBeAdded}`);
     menuDaily.update({
         stock: initialStock + stockToBeAdded,
         },{
@@ -47,16 +47,16 @@ exports.addStock = (id, initialStock, stockToBeAdded) => {
              idx: id 
         }
     }).then((result) => {
-        console.log(result, 'success!')
+        //console.log(result, 'success!')
     }).catch((err)=>{
         console.log(err);
     });
-    console.log('done')
+    //console.log('update done')
 };
 
 exports.substractStock = (id, initialStock, stockToBeSubstracted) => {
-    console.log('substractStock method start');
-    console.log(`메뉴 id : ${id} || 초기Stock : ${initialStock} || 감소 개수 : ${stockToBeSubstracted}`);
+    // console.log('substractStock method start');
+    // console.log(`메뉴 id : ${id} || 초기Stock : ${initialStock} || 감소 개수 : ${stockToBeSubstracted}`);
     menuDaily.update({
         stock: initialStock - stockToBeSubstracted,
         },{
@@ -64,9 +64,9 @@ exports.substractStock = (id, initialStock, stockToBeSubstracted) => {
             idx: id
         }
     }).then((result) => {
-        console.log(result, 'success!')
+        // console.log(result, 'success!')
     }).catch((err) => {
         console.log(err);
     });
-    console.log('done')
+    //console.log('substractStock done')
 };

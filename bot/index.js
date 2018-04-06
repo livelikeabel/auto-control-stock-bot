@@ -8,7 +8,6 @@ const { getMenuDaily, testGetMenuDailyDB, addStock, substractStock } = require('
 
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
-  const jinsuSays = '';
 
   const menuDailyLunch = await getMenuDaily('LUNCH', 'seoul-2', '2018-01-24');
   const menuDailyDinner = await getMenuDaily('DINNER', 'seoul-2', '2018-01-24');
@@ -90,7 +89,8 @@ bot.on('message', async (msg) => {
       addStock(menuDinnerId, initialDinnerStock, controlNumber);
       substractStock(menuLunchId, initialLunchStock, controlNumber);
       //sendmessage funciton 을 만들자.
-      console.log(`송파 Dinner에 ${menuDinnerName}가 매진이 되어 LUNCH에서 ${controlNumber}개 차감하고 DINNER에 ${controlNumber}개 추가 했습니다 \r`)
+      const jinsuSays = `송파 Dinner에 ${menuDinnerName}가 매진이 되어 LUNCH에서 ${controlNumber}개 차감하고 DINNER에 ${controlNumber}개 추가 했습니다 \r`
+      bot.sendMessage(chatId, jinsuSays);
       // console.log(jinsuSays)
     }
   })
